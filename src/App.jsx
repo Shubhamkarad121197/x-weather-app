@@ -33,28 +33,31 @@ const App = () => {
     <div style={{ textAlign: 'center', marginTop: '100px' }}>
       <h1>Weather App</h1>
       <div style={{ textAlign: 'center', marginTop: '50px' }}>
-        <input className="inputBox" type="text" onChange={(e) => setSearchVal(e.target.value)} />
+        <input className="inputBox" type="text" placeholder="Enter City and Search" onChange={(e) => setSearchVal(e.target.value)} />
         <button className="btn" onClick={getWeatherReport}>Search</button>
 
         <div>
           {isLoading ? (
-            'is loading...'
+            <p>
+               'is loading...'
+            </p>
+           
           ) : isApiLoaded ? (
             <>
             <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '20px' }}>
-               <div className='infoCard'>
+               <div className='weather-cards'>
                 <h5>Temperature</h5>
                 <span>{temp}</span>
               </div>
-              <div className='infoCard'>
+              <div className='weather-cards'>
                 <h5>Humidity</h5>
                 <span>{humidity}</span>
               </div>
-              <div className='infoCard'>
+              <div className='weather-cards'>
                 <h5>Condition</h5>
                 <span>{condition}</span>
               </div>
-              <div className='infoCard'>
+              <div className='weather-cards'>
                 <h5>Wind speed</h5>
                 <span>{windSpeed}</span>
               </div>
