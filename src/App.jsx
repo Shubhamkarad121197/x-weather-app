@@ -17,14 +17,21 @@ const App = () => {
     if (!searchVal) return;
 
     setIsLoading(true);
+    setIsApiLoaded(false);
+
     fetch(`${Base_URL}?key=${API_Key}&q=${searchVal}&aqi=no`)
       .then(res => res.json())
       .then(result => {
-        setIsApiLoaded(true);
+        if (result.error) {
+          setIsApiLoaded(false);
+          alert("Invalid city name!");
+          return;
+        }
         setTemp(result.current.temp_c);
         setHumidity(result.current.humidity);
         setCondition(result.current.condition.text);
         setWindSpeed(result.current.wind_kph);
+        setIsApiLoaded(true);
       })
       .catch(err => {
         console.error("Error fetching weather:", err);
@@ -61,19 +68,19 @@ const App = () => {
                   marginTop: "20px",
                 }}
               >
-                <div className="weather-card">
+                <div className="weather-cards">
                   <h5>Temperature</h5>
                   <span>{temp}</span>
                 </div>
-                <div className="weather-card">
+                <div className="weather-cards">
                   <h5>Humidity</h5>
                   <span>{humidity}</span>
                 </div>
-                <div className="weather-card">
+                <div className="weather-cards">
                   <h5>Condition</h5>
                   <span>{condition}</span>
                 </div>
-                <div className="weather-card">
+                <div className="weather-cards">
                   <h5>Wind speed</h5>
                   <span>{windSpeed}</span>
                 </div>
