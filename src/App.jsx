@@ -68,19 +68,19 @@ const App = () => {
                   marginTop: "20px",
                 }}
               >
-                <div className="weather-cards">
+                <div className="weather-card">
                   <h5>Temperature</h5>
                   <span>{temp}</span>
                 </div>
-                <div className="weather-cards">
+                <div className="weather-card">
                   <h5>Humidity</h5>
                   <span>{humidity}</span>
                 </div>
-                <div className="weather-cards">
+                <div className="weather-card">
                   <h5>Condition</h5>
                   <span>{condition}</span>
                 </div>
-                <div className="weather-cards">
+                <div className="weather-card">
                   <h5>Wind speed</h5>
                   <span>{windSpeed}</span>
                 </div>
