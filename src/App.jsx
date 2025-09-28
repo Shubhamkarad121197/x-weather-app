@@ -23,8 +23,8 @@ const App = () => {
       .then(res => res.json())
       .then(result => {
         if (result.error) {
+          alert("Failed to fetch weather data");
           setIsApiLoaded(false);
-          alert("Invalid city name!");
           return;
         }
         setTemp(result.current.temp_c);
@@ -35,6 +35,7 @@ const App = () => {
       })
       .catch(err => {
         console.error("Error fetching weather:", err);
+        alert("Failed to fetch weather data");
         setIsApiLoaded(false);
       })
       .finally(() => {
@@ -58,10 +59,12 @@ const App = () => {
 
         <div>
           {isLoading ? (
-            <p>is loading...</p>
+            <p>Loading data...</p>
           ) : isApiLoaded ? (
             <>
+              {/* parent container with .weather-cards */}
               <div
+                className="weather-cards"
                 style={{
                   display: "flex",
                   justifyContent: "space-around",
