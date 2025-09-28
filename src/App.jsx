@@ -8,13 +8,15 @@ const App = () => {
   const [condition, setCondition] = useState("");
   const [windSpeed, setWindSpeed] = useState("");
   const [isApiLoaded, setIsApiLoaded] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // <-- Add this
+  const [isLoading, setIsLoading] = useState(false);
 
   const Base_URL = "https://api.weatherapi.com/v1/current.json";
-  const API_Key = '8505d093367542309be160107252709';
+  const API_Key = "8505d093367542309be160107252709";
 
   const getWeatherReport = () => {
-    setIsLoading(true); 
+    if (!searchVal) return;
+
+    setIsLoading(true);
     fetch(`${Base_URL}?key=${API_Key}&q=${searchVal}&aqi=no`)
       .then(res => res.json())
       .then(result => {
@@ -24,45 +26,58 @@ const App = () => {
         setCondition(result.current.condition.text);
         setWindSpeed(result.current.wind_kph);
       })
+      .catch(err => {
+        console.error("Error fetching weather:", err);
+        setIsApiLoaded(false);
+      })
       .finally(() => {
-        setIsLoading(false); 
+        setIsLoading(false);
       });
   };
 
   return (
-    <div style={{ textAlign: 'center', marginTop: '100px' }}>
+    <div style={{ textAlign: "center", marginTop: "100px" }}>
       <h1>Weather App</h1>
-      <div style={{ textAlign: 'center', marginTop: '50px' }}>
-        <input className="inputBox" type="text" placeholder="Enter City and Search" onChange={(e) => setSearchVal(e.target.value)} />
-        <button className="btn" onClick={getWeatherReport}>Search</button>
+      <div style={{ textAlign: "center", marginTop: "50px" }}>
+        <input
+          className="inputBox"
+          type="text"
+          placeholder="Enter City and Search"
+          onChange={(e) => setSearchVal(e.target.value)}
+        />
+        <button className="btn" onClick={getWeatherReport}>
+          Search
+        </button>
 
         <div>
           {isLoading ? (
-            <p>
-               is loading...
-            </p>
-           
+            <p>is loading...</p>
           ) : isApiLoaded ? (
             <>
-            <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '20px' }}>
-               <div className='weather-card'>
-                <h5>Temperature</h5>
-                <span>{temp}</span>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  marginTop: "20px",
+                }}
+              >
+                <div className="weather-card">
+                  <h5>Temperature</h5>
+                  <span>{temp}</span>
+                </div>
+                <div className="weather-card">
+                  <h5>Humidity</h5>
+                  <span>{humidity}</span>
+                </div>
+                <div className="weather-card">
+                  <h5>Condition</h5>
+                  <span>{condition}</span>
+                </div>
+                <div className="weather-card">
+                  <h5>Wind speed</h5>
+                  <span>{windSpeed}</span>
+                </div>
               </div>
-              <div className='weather-card'>
-                <h5>Humidity</h5>
-                <span>{humidity}</span>
-              </div>
-              <div className='weather-card'>
-                <h5>Condition</h5>
-                <span>{condition}</span>
-              </div>
-              <div className='weather-card'>
-                <h5>Wind speed</h5>
-                <span>{windSpeed}</span>
-              </div>
-            </div>
-             
             </>
           ) : null}
         </div>
